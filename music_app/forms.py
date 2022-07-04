@@ -135,6 +135,7 @@ class AddMusicianToBandForm(forms.Form):
 
 
 class ReviewCreateForm(forms.Form):
+    subject = forms.CharField()
     rating = forms.DecimalField(max_digits=3,
                                 decimal_places=1,
                                 widget=forms.NumberInput(

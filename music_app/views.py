@@ -998,12 +998,14 @@ class ReviewCreateView(LoginRequiredMixin, View):
         if form.is_valid():
             data = form.cleaned_data
 
+            subject = data.get('subject')
             title = album.id
             band_name = band.id  # TODO how to get id from this object
             rating = data.get('rating')
             description = data.get('description')
 
             Review.objects.create(
+                subject=subject,
                 album_id=title,
                 band_id=band_name,
                 rating=rating,
