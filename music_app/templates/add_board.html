@@ -1,13 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add board - All Time Music</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
     {{ message }}
     <h2>Welcome to All Time Music adding board</h2>
     <h3>You can add some music data here.</h3>
@@ -18,5 +11,4 @@
     <a href="/album/create/"><button>Add album</button></a><br>
     <a href="/add/musician-to-band/"><button>Add musician to band</button></a><br>
     <a href="/"><button>Return to Main Page</button></a>
-</body>
-</html>
+{% endblock %}

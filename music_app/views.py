@@ -1212,3 +1212,17 @@ class AddMusicDataView(LoginRequiredMixin, View):
         )
 
 
+def search_band(request):
+    band = Band.objects.all()
+    searching_band = request.GET['query']
+
+    if searching_band:
+        band = Band.objects.filter(name__icontains=searching_band)
+
+    return render(
+        request,
+        'searching-results.html',
+        context={
+            'band': band
+        }
+    )

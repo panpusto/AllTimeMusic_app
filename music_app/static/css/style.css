@@ -1,0 +1,14 @@
+.navbar-brand {
+    color: antiquewhite;
+    font-family: Chalkduster;
+}
+
+.nav-link {
+    color: antiquewhite;
+    font-family: Gill Sans;
+}
+
+.nav-link.active {
+    color: antiquewhite;
+    font-family: Gill Sans;
+}

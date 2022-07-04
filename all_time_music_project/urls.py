@@ -65,4 +65,5 @@ urlpatterns = [
     path('review/delete/confirm/<int:_id>/', views.ReviewDeleteConfirmView.as_view(), name='review-delete-confirm'),
     path('review/delete/<int:_id>/', views.ReviewDeleteView.as_view(), name='review-delete'),
     path('add-board/', views.AddMusicDataView.as_view(), name='add-board'),
+    path('searching-results/', views.search_band, name='searching-results'),
 ]

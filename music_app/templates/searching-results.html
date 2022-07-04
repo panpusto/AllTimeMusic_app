@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% for item in band %}
+        <a href="/band/details/{{ item.id }}">{{ item.name }} {{ item.country_of_origin }}</a><br>
+    {% endfor %}
+{% endblock %}
