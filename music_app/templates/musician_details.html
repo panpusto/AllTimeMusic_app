@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Musician details</title>
+</head>
+<body>
+    <h2>Musician details</h2>
+    Added {{ musician.added }} by {{ musician.added_by }}
+        <ul>
+            <li>Name: {{ musician.name }}</li>
+            <li>Full name: {{ musician.full_name }}</li>
+            <li>Born: {{ musician.born }}</li>
+            <li>Died: {{ musician.died }}</li>
+            <li>Place of birth: {{ musician.place_of_birth }}</li>
+            <li>Bio: {{ musician.bio }}</li>
+        </ul>
+        <form action="/musician/update/{{ musician.id }}/">
+            <p><input type="submit" value="Update musician"></p>
+        </form>
+        <form action="/musician/delete/confirm/{{ musician.id }}">
+            <p><input type="submit" value="Delete musician from database"></p>
+        </form>
+        <form action="/">
+            <p><input type="submit" value="Return to Main Page"></p>
+        </form>
+</body>
+</html>

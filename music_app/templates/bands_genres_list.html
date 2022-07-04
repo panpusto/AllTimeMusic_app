@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bands list by genre</title>
+    <style>
+         table, th, td {
+            border: 1px solid black;
+         }
+    </style>
+</head>
+<body>
+    <h1>Choose genre to see bands</h1>
+        <table>
+            <tr>
+                <th>Genre</th>
+                <th>Options</th>
+            </tr>
+            <tr>
+            {% for genre in page_obj %}
+            <tr>
+                <td><a href="/bands/genres/{{ genre.id }}">{{ genre.name }}</a></td>
+                <td><a href="/genre/update/{{ genre.id }}/">Edit</a>
+                    <a href="/genre/delete/confirm/{{ genre.id }}/">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<a href="/"><button>Return to Main Page</button></a>
+</body>
+</html>

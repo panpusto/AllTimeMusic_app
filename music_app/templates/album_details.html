@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Band details</title>
+</head>
+<body>
+    <h2>Album details</h2>
+    Added {{ album.added }} by {{ album.added_by }}
+        <ul>
+            <li>Title: {{ album.title }}</li>
+            <li>Band: {{ album.band }}</li>
+            <li>Genre:</li>
+                <td>{% for genre in album.genre.all %}
+                        {{ genre.name }}<br>
+                        {% endfor %}</td>
+            <li>Label: {{ album.label }}</li>
+            <li>Type: {{ album.get_type_display}}</li>
+            <li>Release date: {{ album.release_date }}</li>
+            <li>Catalog ID: {{ album.catalog_id }}</li>
+            <li>Format: {{ album.get_format_display }}</li>
+        </ul>
+{#        <form action="/review/create/{{ album.id }}/">#}
+{#            <p><input type="submit" value="Create album review"></p>#}
+{#        </form>#}
+        <form action="/album/update/{{ album.id }}/">
+            <p><input type="submit" value="Update album info"></p>
+        </form>
+        <form action="/album/delete/confirm/{{ album.id }}">
+            <p><input type="submit" value="Delete album"></p>
+        </form>
+        <form action="/">
+            <p><input type="submit" value="Return to Main Page"></p>
+        </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Label details</title>
+</head>
+<body>
+    <h2>Label details</h2>
+    Added {{ label.added }} by {{ label.added_by }}
+        <ul>
+            <li>Name: {{ label.name }}</li>
+            <li>Address: {{ label.address }}</li>
+            <li>Country: {{ label.country }}</li>
+            <li>Status: {{ label.get_status_display }}</li>
+            <li>Styles: {{ label.styles }}</li>
+            <li>Founding year: {{ label.founding_year }}</li>
+        </ul>
+        <form action="/label/update/{{ label.id }}/">
+            <p><input type="submit" value="Update label info"></p>
+        </form>
+        <form action="/label/delete/confirm/{{ label.id }}">
+            <p><input type="submit" value="Delete label"></p>
+        </form>
+        <form action="/">
+            <p><input type="submit" value="Return to Main Page"></p>
+        </form>
+</body>
+</html>
