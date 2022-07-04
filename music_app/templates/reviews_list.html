@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bands list alphabetical</title>
+    <title>Album reviews</title>
     <style>
          table, th, td {
             border: 1px solid black;
@@ -17,19 +17,21 @@
         <table>
             <tr>
                 <th>Title</th>
-                <th>Country</th>
-                <th>Genre</th>
-                <th>Status</th>
+                <th>Album</th>
+                <th>Band</th>
+                <th>Rate</th>
             </tr>
             <tr>
-            {% for band in page_obj %}
+            {% for review in page_obj %}
             <tr>
-                <td><a href="/band/details/{{ band.id }}">{{ band.name }}</a></td>
-                <td>{{ band.country_of_origin }}</td>
-                <td>{% for genre in band.genre.all %}
-                    {{ genre.name }}<br>
-                    {% endfor %}</td>
-                <td>{{ band.get_status_display }}</td>
+                <td><a href="/review/details/{{ review.id }}">{{ review.subject }}</a></td>
+                <td>{{ review.album }}</td>
+                <td>{{ review.band }}</td>
+                <td>{{ review.rating }}</td>
+                {% if review.user == user %}
+                    <td><a href="/review/update/{{ review.id }}"><button>Edit</button></a>
+                        <a href="/review/delete/confirm/{{ review.id }}"><button>Delete</button></a></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>

@@ -36,7 +36,7 @@
             <li>Discography:</li>
             {% for album in albums %}
                 <a href="/album/details/{{ album.id }}">{{ album.title }}({{ album.release_date }})</a>
-                <a href="/review/create/{{ album.id }}/{{ band.id }}/">Add review</a><br>
+                <a href="/review/create/{{ album.id }}/{{ band.id }}/"><button>Add review</button></a><br>
             {% endfor %}
         </ul>
         <form action="/band/update/{{ band.id }}/">

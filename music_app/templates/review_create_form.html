@@ -12,8 +12,8 @@
     {{ message }}
     <h3>Write your review</h3>
     {% csrf_token %}
-    <p>Title: {{ album.title }}</p>
-    <p>Band: {{ album.band }}</p>
+    <p>{{ album.title }}</p>
+    <p>{{ album.band }}</p>
     {{ form.as_p }}
     <input type="submit" value="Add"><br>
 </form>

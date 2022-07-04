@@ -1073,7 +1073,7 @@ class AddMusicianToBand(LoginRequiredMixin, View):
             )
 
 
-class DeleteMusicianFromBand(LoginRequiredMixin, View):
+class DeleteMusicianFromBandView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
@@ -1099,11 +1099,100 @@ class DeleteMusicianFromBandConfirmView(LoginRequiredMixin, View):
 class ReviewsListView(View):
     def get(self, request):
         reviews = Review.objects.all().order_by('-added')
+        paginator = Paginator(reviews, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         return render(
             request,
             'reviews_list.html',
             context={
-                'reviews': reviews
+                'page_obj': page_obj
+            }
+        )
+
+
+class ReviewDetailsView(View):
+    def get(self, request, _id):
+        review = Review.objects.get(pk=_id)
+
+        return render(
+            request,
+            'review_details.html',
+            context={
+                'review': review
+            }
+        )
+
+
+class ReviewUpdateView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, _id):
+        review = get_object_or_404(Review, pk=_id)
+        form = forms.ReviewCreateForm(initial={'subject': review.subject,
+                                               'album': review.album,
+                                               'band': review.band,
+                                               'description': review.description,
+                                               'rating': review.rating})
+
+        return render(
+            request,
+            'review_create_form.html',
+            context={
+                'form': form
+            }
+        )
+
+    def post(self, request, _id):
+        review = Review.objects.get(pk=_id)
+        form = forms.ReviewCreateForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            subject = data.get('subject')
+            description = data.get('description')
+            rating = data.get('rating')
+            user = request.user
+
+            review.subject = subject
+            review.description = description
+            review.rating = rating
+            review.user = user
+            review.save()
+
+            return redirect('reviews-list')
+
+        else:
+            return render(
+                request,
+                'review_create_form.html',
+                context={
+                    'form': form
+                }
+            )
+
+
+class ReviewDeleteView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, _id):
+        Review.objects.get(id=_id).delete()
+
+        return redirect('reviews-list')
+
+
+class ReviewDeleteConfirmView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, _id):
+        review = Review.objects.get(id=_id)
+        return render(
+            request,
+            'review_delete_confirm.html',
+            context={
+                'review': review
             }
         )
 
@@ -1121,3 +1210,5 @@ class AddMusicDataView(LoginRequiredMixin, View):
                 'message': message
             }
         )
+
+

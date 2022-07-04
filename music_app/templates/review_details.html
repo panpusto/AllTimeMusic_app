@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Musician details</title>
+</head>
+<body>
+    <h2>Review</h2>
+    Added {{ review.added }} by {{ review.user }}
+        <ul>
+            <li>{{ review.subject }}</li>
+            <li>{{ review.album }}</li>
+            <li>{{ review.band }}</li>
+            <li>{{ review.description }}</li>
+            <li>{{ review.rating }}</li>
+        </ul>
+        <form action="/reviews/list/">
+            <p><input type="submit" value="Back"></p>
+        </form>
+</body>
+</html>

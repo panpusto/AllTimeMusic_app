@@ -36,7 +36,7 @@ urlpatterns = [
     path('delete/musician-from-band/confirm/<int:_id>/',
          views.DeleteMusicianFromBandConfirmView.as_view(), name='delete-music-from-band-confirm'),
     path('delete/musician-from-band/<int:_id>/',
-         views.DeleteMusicianFromBand.as_view(), name='delete-musician-from-band'),
+         views.DeleteMusicianFromBandView.as_view(), name='delete-musician-from-band'),
     path('musician/details/<int:_id>/', views.MusicianDetailsView.as_view(), name='musician-details'),
     path('musician/create/', views.MusicianCreateView.as_view(), name='musician-create'),
     path('musician/update/<int:_id>/', views.MusicianUpdateView.as_view(), name='musician-update'),
@@ -60,5 +60,9 @@ urlpatterns = [
     path('album/delete/<int:_id>/', views.AlbumDeleteView.as_view(), name='album-delete'),
     path('review/create/<int:album_id>/<int:band_id>/', views.ReviewCreateView.as_view(), name='review-create'),
     path('reviews/list/', views.ReviewsListView.as_view(), name='reviews-list'),
+    path('review/details/<int:_id>/', views.ReviewDetailsView.as_view(), name='review-details'),
+    path('review/update/<int:_id>/', views.ReviewUpdateView.as_view(), name='review-update'),
+    path('review/delete/confirm/<int:_id>/', views.ReviewDeleteConfirmView.as_view(), name='review-delete-confirm'),
+    path('review/delete/<int:_id>/', views.ReviewDeleteView.as_view(), name='review-delete'),
     path('add-board/', views.AddMusicDataView.as_view(), name='add-board'),
 ]
