@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    {% for item in band %}
-        <a href="/band/details/{{ item.id }}">{{ item.name }} {{ item.country_of_origin }}</a><br>
-    {% endfor %}
+    <h1>Results</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Formed in</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+            {% for item in band %}
+            <tr>
+                <td><a href="/band/details/{{ item.id }}">{{ item.name }}</a></td>
+                <td>{{ item.country_of_origin }}</td>
+                <td>{{ item.formed_in }}</td>
+                <td>{{ item.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+        </table>
 {% endblock %}

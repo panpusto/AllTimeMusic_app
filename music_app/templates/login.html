@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Log in - All Time Music</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
     <h3>Log in</h3><br>
     {{ message }}
     <form method="post">
@@ -20,5 +17,5 @@
     Don't have an account? <a href="/create-account/"><button>Join us!</button></a><br>
     <a href="/logout/"><button>Log out</button></a>
     <a href="/"><button>Return to Main Page</button></a>
-</body>
-</html>
+
+{% endblock %}

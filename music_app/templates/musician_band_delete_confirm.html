@@ -1,16 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Remove musician from band - confirm </title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
     <h1>All Time Music!</h1>
     <p>Are you sure to delete musician {{ musician }} from band {{ band }}?</p><br>
     <a href="/bands/alphabetical/">No</a><br>
     <a href="/delete/musician-from-band/{{ musician.id }}/">Yes</a><br>
-</body>
-</html>
+
+{% endblock %}

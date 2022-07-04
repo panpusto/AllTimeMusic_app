@@ -1,13 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add musician - All Time Music </title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
 <form method="post">
     {{ message }}
     <h3>Write your review</h3>
@@ -18,5 +12,5 @@
     <input type="submit" value="Add"><br>
 </form>
 <a href="/add-board/"><button>Return to Adding Board</button></a>
-</body>
-</html>
+
+{% endblock %}
