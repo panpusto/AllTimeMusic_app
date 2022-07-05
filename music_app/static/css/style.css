@@ -12,3 +12,19 @@
     color: antiquewhite;
     font-family: Gill Sans;
 }
+
+body {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pagination {
+    display: inline-block !important;
+    vertical-align: middle;
+}

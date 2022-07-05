@@ -106,7 +106,7 @@ class Album(models.Model):
     band = models.ForeignKey(Band, on_delete=models.CASCADE, related_name='album_by')
     genre = models.ManyToManyField(Genre)
     type = models.IntegerField(choices=ALBUM_TYPES)
-    release_date = models.DateField()
+    release_date = models.DateField(null=True)
     catalog_id = models.CharField(max_length=16)
     label = models.ForeignKey(Label, on_delete=models.CASCADE)
     format = models.IntegerField(choices=FORMAT_TYPES)
@@ -120,14 +120,14 @@ class Album(models.Model):
 
 
 class Review(models.Model):
-    subject = models.CharField(max_length=30, null=True)    # TODO change null before new migration
+    subject = models.CharField(max_length=30)
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     band = models.ForeignKey(Band, on_delete=models.CASCADE)
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     description = models.TextField(null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    added = models.DateTimeField(auto_now_add=True, null=True)  # TODO change null before new migration
+    added = models.DateTimeField(auto_now_add=True)
 
 
 class MusicianBand(models.Model):

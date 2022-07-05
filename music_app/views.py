@@ -333,6 +333,7 @@ class BandUpdateView(LoginRequiredMixin, View):
                 }
             )
 
+
 class BandDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 

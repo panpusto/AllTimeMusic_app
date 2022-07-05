@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models.fields import BLANK_CHOICE_DASH
-
 from music_app.models import BAND_STATUS, Musician, Genre, Label, LABEL_STATUS, ALBUM_TYPES, FORMAT_TYPES, Band
 
 
@@ -59,13 +58,13 @@ class BandCreateForm(forms.Form):
     formed_in = forms.IntegerField()
     ended_in = forms.IntegerField(required=False)
     genre = forms.MultipleChoiceField(choices=[
-        (genre.id, f'{genre}') for genre in Genre.objects.all()
+        (genre.id, f'{genre}') for genre in Genre.objects.all().order_by('name')
         ],
         widget=forms.CheckboxSelectMultiple(),
         label='Genre',
         required=True
     )
-    lyrical_themes = forms.CharField()
+    lyrical_themes = forms.CharField(max_length=60)
     current_label = forms.ChoiceField(choices=BLANK_CHOICE_DASH + [
         (label.id, f'{label}') for label in Label.objects.all()
         ],
