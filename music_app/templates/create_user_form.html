@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-<form method="post">
-    <h3>Enter your details</h3>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register">
-</form>
-<a href="/"><button>Return to Main Page</button></a>
+        <form method="post">
+            <h3>Enter your details</h3>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-dark" value="Register">
+        </form>
+{#<a href="/"><button>Return to Main Page</button></a>#}
 
 {% endblock %}

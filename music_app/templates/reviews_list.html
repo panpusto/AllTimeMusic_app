@@ -3,7 +3,7 @@
 {% block body %}
 
     <h1>Reviews</h1>
-        <table>
+        <table class="table table-hover">
             <tr>
                 <th>Title</th>
                 <th>Album</th>
@@ -13,7 +13,7 @@
             <tr>
             {% for review in page_obj %}
             <tr>
-                <td><a href="/review/details/{{ review.id }}">{{ review.subject }}</a></td>
+                <td><a class="link-dark" href="/review/details/{{ review.id }}">{{ review.subject }}</a></td>
                 <td>{{ review.album }}</td>
                 <td>{{ review.band }}</td>
                 <td>{{ review.rating }}</td>
@@ -24,23 +24,27 @@
             </tr>
             {% endfor %}
         </table>
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-<a href="/"><button>Return to Main Page</button></a>
-
+    {% if page_obj.has_other_pages %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a></li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if page_obj.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link" href="">{{ i }}
+                            <span class="sr-only"></span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class ="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
 {% endblock %}

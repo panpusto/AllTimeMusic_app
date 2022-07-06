@@ -179,6 +179,7 @@ def test_reset_password_view(client, user):
     )
     assert post_response.status_code == 200
 
+
 @pytest.mark.django_db
 def test_bands_list_alphabetical(client):
     get_response = client.get('/bands/alphabetical/')
@@ -232,7 +233,7 @@ def test_band_details_view(client, band, label, genre, user):
 
 
 @pytest.mark.django_db
-def test_band_create_view(client, band,label, genre, user):
+def test_band_create_view(client, band, label, genre, user):
     response = client.get('/band/create/')
     assert response.status_code == 302  # for not logged user
     client.force_login(user)
@@ -258,7 +259,8 @@ def test_band_create_view(client, band,label, genre, user):
     )
     # count_after_create = Band.objects.count()
     assert post_response.status_code == 200
-    # assert count_after_create == count_before_create + 1  # TODO doesn't work in terminal, test passed with 'run'
+    # assert count_after_create == count_before_create + 1
+    # TODO doesn't work in terminal, test passed with 'run'
 
 
 @pytest.mark.django_db
@@ -328,7 +330,8 @@ def test_album_create_view(client, album, band, label, genre, user):
     )
     # count_after_create = Album.objects.count()
     assert post_response.status_code == 200
-    # assert count_after_create == count_before_create + 1    # TODO doesn't work in terminal, test passed with 'run'
+    # assert count_after_create == count_before_create + 1
+    # TODO doesn't work in terminal, test passed with 'run'
 
 
 @pytest.mark.django_db
@@ -447,7 +450,8 @@ def test_add_musician_to_band_view(client, band, musician, musician_to_band, use
     )
     # count_after_create = MusicianBand.objects.count()
     assert post_response.status_code == 200
-    # assert count_after_create == count_before_create + 1  #TODO fix, passed in 'run' not terminal
+    # assert count_after_create == count_before_create + 1
+    # #TODO fix, passed in 'run' not terminal
 
 
 @pytest.mark.django_db

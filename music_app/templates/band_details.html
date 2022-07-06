@@ -4,6 +4,7 @@
 
     <h2>Band details</h2>
     Added {{ band.added }} by {{ band.added_by }}
+    <div class="details">
         <ul>
             <li>Name: {{ band.name }}</li>
             <li>Country of origin: {{ band.country_of_origin }}</li>
@@ -33,6 +34,7 @@
                 <a href="/review/create/{{ album.id }}/{{ band.id }}/"><button>Add review</button></a><br>
             {% endfor %}
         </ul>
+    </div>
         <form action="/band/update/{{ band.id }}/">
             <p><input type="submit" value="Update band details"></p>
         </form>

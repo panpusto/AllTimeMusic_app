@@ -24,7 +24,12 @@ table {
     margin-right: auto;
 }
 
-.pagination {
-    display: inline-block !important;
-    vertical-align: middle;
+ul {
+    list-style: none;
+}
+
+.details {
+    max-width: 500px;
+    margin: auto;
+    width: 50%;
 }
