@@ -1,3 +1,5 @@
+from random import shuffle
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -10,7 +12,22 @@ from music_app.models import Band, Genre, Musician, Label, Album, MusicianBand, 
 
 class LandingPageView(View):
     def get(self, request):
-        return render(request, 'main_page.html')
+        random_reviews = list(Review.objects.all())[:3]
+        shuffle(random_reviews)
+        try:
+            random_first = random_reviews.pop(0)
+            random_two_last = random_reviews
+        except IndexError:
+            random_first = random_two_last = random_reviews
+
+        return render(
+            request,
+            'main_page.html',
+            context={
+                'random_first': random_first,
+                'random_two_last': random_two_last
+            }
+        )
 
 
 class UserCreateView(View):
@@ -98,13 +115,13 @@ class LoginView(View):
 
 class LogoutView(View):
     def get(self, request):
-        if request.user:
+        if request.user.is_authenticated:
             logout(request)
 
-        return redirect('login')
+        return redirect('/')
 
 
-class PasswordResetView(PermissionRequiredMixin, View):
+class PasswordResetView(LoginRequiredMixin, View):
     permission_required = 'auth.change_user'
 
     def get(self, request, user_id):
@@ -1202,14 +1219,10 @@ class AddMusicDataView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        user = request.user
-        message = f'You are logged as {user.username}'
+
         return render(
             request,
             'add_board.html',
-            context={
-                'message': message
-            }
         )
 
 

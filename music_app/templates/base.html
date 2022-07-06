@@ -23,12 +23,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if not user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="/login/">Log in</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/create-account/">Create account</a>
             </li>
+            {% endif %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,6 +63,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="/add-board/">Add new content</a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                You are logged as {{ user.username }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/reset-password/{{ user.id }}/">Reset password</a></li>
+                <li><a class="dropdown-item" href="/logout">Log out</a></li>
+              </ul>
+            </li>
+            {% endif %}
           </ul>
           <form class="d-flex" role="search" method="get" action="/searching-results/">
             <input class="form-control me-2" type="search" placeholder="Search band" name="query" aria-label="Search">

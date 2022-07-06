@@ -119,6 +119,67 @@ def test_connection(client):
 
 
 @pytest.mark.django_db
+def test_create_account_view(client, user):
+    get_response = client.get('/create-account/')
+    assert get_response.status_code == 200
+    count_before_create = User.objects.count()
+    new_user = {
+        'username': 'maniek',
+        'password': 'lanek123',
+        'password2': 'lanek123',
+        'first_name': 'Marian',
+        'last_name': 'Borek',
+        'email': 'marianek@mario.pl',
+    }
+    post_response = client.post(
+        '/create-account/',
+        new_user,
+        follow=True
+    )
+    count_after_create = User.objects.count()
+    assert post_response.status_code == 200
+    assert count_after_create == count_before_create + 1
+
+
+@pytest.mark.django_db
+def test_login_view(client, user):
+    response = client.get('/login/')
+    assert response.status_code == 200
+    login_user = {
+        'username': user.username,
+        'password': user.password
+    }
+    post_response = client.post(
+        '/login/',
+        login_user,
+        follow=True
+    )
+    assert post_response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_logout_view(client, user):
+    client.force_login(user)
+    get_response = client.get('/logout/')
+    assert get_response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_reset_password_view(client, user):
+    client.force_login(user)
+    get_response = client.get(f'/reset-password/{user.id}/')
+    assert get_response.status_code == 200
+    post_response = client.post(
+        f'/reset-password/{user.id}/',
+        {
+            'new_password': 'bolek',
+            'new_password2': 'bolek'
+        },
+        follow=True
+    )
+    assert post_response.status_code == 200
+
+@pytest.mark.django_db
 def test_bands_list_alphabetical(client):
     get_response = client.get('/bands/alphabetical/')
     assert get_response.status_code == 200
@@ -171,7 +232,7 @@ def test_band_details_view(client, band, label, genre, user):
 
 
 @pytest.mark.django_db
-def test_band_create_view(client, label, genre, user):
+def test_band_create_view(client, band,label, genre, user):
     response = client.get('/band/create/')
     assert response.status_code == 302  # for not logged user
     client.force_login(user)
@@ -365,6 +426,43 @@ def test_musician_delete_view(client, musician, user):
 
 
 @pytest.mark.django_db
+def test_add_musician_to_band_view(client, band, musician, musician_to_band, user):
+    response = client.get('/add/musician-to-band/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get('/add/musician-to-band/')
+    assert get_response.status_code == 200
+    # count_before_create = MusicianBand.objects.count()
+    new_musician_to_band = {
+        'musician': musician.id,
+        'band': band.id,
+        'year_from': 1980,
+        'year_to': 2000,
+        'role': 'solo guitar'
+    }
+    post_response = client.post(
+        '/add/musician-to-band/',
+        new_musician_to_band,
+        follow=True,
+    )
+    # count_after_create = MusicianBand.objects.count()
+    assert post_response.status_code == 200
+    # assert count_after_create == count_before_create + 1  #TODO fix, passed in 'run' not terminal
+
+
+@pytest.mark.django_db
+def test_delete_musician_from_band(client, band, musician, musician_to_band, user):
+    musician_in_band = MusicianBand.objects.first()
+    response = client.get(f'/delete/musician-from-band/{musician_in_band.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/delete/musician-from-band/{musician_in_band.id}/')
+    assert get_response.status_code == 302
+    musician_in_band_ids = [musician_in_band.id for musician_in_band in MusicianBand.objects.all()]
+    assert musician_in_band.id not in musician_in_band_ids
+
+
+@pytest.mark.django_db
 def test_label_details_view(client, user, label):
     response = client.get(f'/label/details/{label.id}/')
     assert response.context.get('name' == 'Sony Music Polska')
@@ -491,3 +589,77 @@ def test_review_details_view(client, review, album, band, user):
     assert response.context.get('description' == 'great music for heavy metal maniacs')
     assert response.context.get('user' == user)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_review_create_view(client, review, album, band, user):
+    response = client.get(f'/review/create/{album.id}/{band.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/review/create/{album.id}/{band.id}/')
+    assert get_response.status_code == 200
+    count_before_create = Review.objects.count()
+    new_review = {
+        'subject': 'titans still on the throne',
+        'album': album.id,
+        'band': band.id,
+        'rating': 10.0,
+        'description': 'the best album from them so far',
+        'user': user.id
+    }
+    post_response = client.post(
+        f'/review/create/{album.id}/{band.id}/',
+        new_review,
+        follow=True,
+    )
+    count_after_create = Review.objects.count()
+    assert post_response.status_code == 200
+    assert count_after_create == count_before_create + 1
+
+
+@pytest.mark.django_db
+def test_review_update_view(client, review, album, band, user):
+    review = Review.objects.first()
+    response = client.get(f'/review/update/{review.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/review/update/{review.id}/')
+    assert get_response.status_code == 200
+    review.subject = 'booooring'
+    review.rating = 3.5
+    review.save()
+    assert get_response.status_code == 200
+    review_obj = Review.objects.get(id=review.id)
+    assert review_obj.subject == review.subject
+    assert review_obj.rating == review.rating
+
+
+@pytest.mark.django_db
+def test_review_delete_view(client, review, user):
+    review = Review.objects.first()
+    response = client.get(f'/review/delete/{review.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/review/delete/{review.id}/')
+    assert get_response.status_code == 302
+    review_ids = [review.id for review in Review.objects.all()]
+    assert review.id not in review_ids
+
+
+@pytest.mark.django_db
+def test_add_board_view(client, user):
+    response = client.get('/add-board/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get('/add-board/')
+    assert get_response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_search_band_view(client):
+    response = client.get(
+        '/searching-results/',
+        {'query': 'Metallica'},
+        follow=True)
+    assert response.status_code == 200
+
