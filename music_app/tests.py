@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth.models import User
 from django.test import Client
-from music_app.models import Genre, Band, Label, Album, Musician, MusicianBand
+from music_app.models import Genre, Band, Label, Album, Musician, MusicianBand, Review
 
 
 @pytest.fixture
@@ -97,6 +97,19 @@ def musician_to_band(musician, band):
         role='leading guitar, vocal'
     )
     return musician_to_band
+
+
+@pytest.fixture
+def review(client, user, album, band):
+    review = Review.objects.create(
+        subject='Oldschool still rules!',
+        album=album,
+        band=band,
+        rating=8.5,
+        description='great music for heavy metal maniacs',
+        user=user
+    )
+    return review
 
 
 @pytest.mark.django_db
@@ -300,7 +313,7 @@ def test_musician_details_view(client, musician, user, band, musician_to_band):
 @pytest.mark.django_db
 def test_musician_create_view(client, user, band, musician, musician_to_band):
     response = client.get('/musician/create/')
-    assert response.status_code == 302  # for not logged user
+    assert response.status_code == 302
     client.force_login(user)
     get_response = client.get('/musician/create/')
     assert get_response.status_code == 200
@@ -367,7 +380,7 @@ def test_label_details_view(client, user, label):
 @pytest.mark.django_db
 def test_label_create_view(client, user, label):
     response = client.get('/label/create/')
-    assert response.status_code == 302  # for not logged user
+    assert response.status_code == 302
     client.force_login(user)
     get_response = client.get('/label/create/')
     assert get_response.status_code == 200
@@ -421,20 +434,60 @@ def test_label_delete_view(client, label, user):
 
 
 @pytest.mark.django_db
-def test_genre_details_view(client, genre):
-    pass
+def test_genre_create_view(client, genre, user):
+    response = client.get('/genre/create/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get('/genre/create/')
+    assert get_response.status_code == 200
+    count_before_create = Genre.objects.count()
+    new_genre = {
+        'name': 'heavy metal',
+    }
+    post_response = client.post(
+        '/genre/create/',
+        new_genre,
+        follow=True,
+    )
+    count_after_create = Genre.objects.count()
+    assert post_response.status_code == 200
+    assert count_after_create == count_before_create + 1
 
 
 @pytest.mark.django_db
-def test_genre_create_view(client, genre):
-    pass
+def test_genre_update_view(client, genre, user):
+    genre = Genre.objects.first()
+    response = client.get(f'/genre/update/{genre.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/genre/update/{genre.id}/')
+    assert get_response.status_code == 200
+    genre.name = 'indie rock'
+    genre.save()
+    assert get_response.status_code == 200
+    genre_obj = Genre.objects.get(id=genre.id)
+    assert genre_obj.name == genre.name
 
 
 @pytest.mark.django_db
-def test_genre_update_view(client, genre):
-    pass
+def test_genre_delete_view(client, genre, user):
+    genre = Genre.objects.first()
+    response = client.get(f'/genre/delete/{genre.id}/')
+    assert response.status_code == 302
+    client.force_login(user)
+    get_response = client.get(f'/genre/delete/{genre.id}/')
+    assert get_response.status_code == 302
+    genre_ids = [genre.id for genre in Genre.objects.all()]
+    assert genre.id not in genre_ids
 
 
 @pytest.mark.django_db
-def test_genre_delete_view(client, genre):
-    pass
+def test_review_details_view(client, review, album, band, user):
+    response = client.get(f'/review/details/{review.id}/')
+    assert response.context.get('subject' == 'Oldschool still rules!')
+    assert response.context.get('album' == album.id)
+    assert response.context.get('band' == band.id)
+    assert response.context.get('rating' == 8.5)
+    assert response.context.get('description' == 'great music for heavy metal maniacs')
+    assert response.context.get('user' == user)
+    assert response.status_code == 200
