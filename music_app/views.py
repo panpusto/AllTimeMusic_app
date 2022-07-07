@@ -1233,10 +1233,22 @@ def search_band(request):
     if searching_band:
         band = Band.objects.filter(name__icontains=searching_band)
 
+        if not band:
+            message = "No results"
+
+            return render(
+                request,
+                'searching-results.html',
+                context={
+                    'band': band,
+                    'message': message
+                }
+            )
+
     return render(
         request,
         'searching-results.html',
         context={
-            'band': band
+            'band': band,
         }
     )
