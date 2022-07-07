@@ -3,8 +3,9 @@
 {% block body %}
 
     <h1>All Time Music!</h1>
-    <p>Are you sure to delete review {{ review.subject }}?</p><br>
-    <a href="/reviews/list/">No</a><br>
-    <a href="/review/delete/{{ review.id }}/">Yes</a><br>
+    <p>Are you sure to delete review "{{ review.subject }}" to album titled {{ review.album }}
+        by {{ review.band }}?</p><br>
+    <a href="/reviews/list/"><button class="btn btn-dark">No</button></a>
+    <a href="/review/delete/{{ review.id }}/"><button class="btn btn-dark">Yes</button></a>
 
 {% endblock %}

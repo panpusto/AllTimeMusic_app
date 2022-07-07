@@ -4,7 +4,7 @@
 
     <h1>All Time Music!</h1>
     <p>Are you sure to delete band {{ band.name }}?</p><br>
-    <a href="/band/details/{{ band.id }}/">No</a><br>
-    <a href="/band/delete/{{ band.id }}/">Yes</a><br>
+    <a href="/band/details/{{ band.id }}/"><button class="btn btn-dark">No</button></a>
+    <a href="/band/delete/{{ band.id }}/"><button class="btn btn-dark">Yes</button></a>
 
 {% endblock %}

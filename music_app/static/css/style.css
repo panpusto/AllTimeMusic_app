@@ -33,3 +33,7 @@ ul {
     margin: auto;
     width: 50%;
 }
+
+.details.review-subject {
+    font-style: oblique;
+}

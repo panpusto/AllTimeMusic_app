@@ -4,15 +4,18 @@
 
     <h2>Review</h2>
     Added {{ review.added }} by {{ review.user }}
-        <ul>
-            <li>{{ review.subject }}</li>
-            <li>{{ review.album }}</li>
-            <li>{{ review.band }}</li>
-            <li>{{ review.description }}</li>
-            <li>{{ review.rating }}</li>
-        </ul>
-        <form action="/reviews/list/">
-            <p><input type="submit" value="Back"></p>
-        </form>
-
+        <div class="details">
+            <ul>
+                <p class="review-subject"><li>{{ review.subject }}</li></p>
+                <li>Album title: <a class="link-dark" href="/album/details/{{ review.album.id }}/">
+                    {{ review.album }}</a></li>
+                <li>Album by: <a class="link-dark" href="/band/details/{{ review.band.id }}/">
+                    {{ review.band }}</a></li>
+                <li>Review: {{ review.description }}</li>
+                <li>Rate: {{ review.rating }}</li>
+            </ul>
+            <form action="/reviews/list/">
+                <p><input type="submit" class="btn btn-dark" value="Back"></p>
+            </form>
+        </div>
 {% endblock %}

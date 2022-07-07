@@ -18,8 +18,10 @@
                 <td>{{ review.band }}</td>
                 <td>{{ review.rating }}</td>
                 {% if review.user == user %}
-                    <td><a href="/review/update/{{ review.id }}"><button>Edit</button></a>
-                        <a href="/review/delete/confirm/{{ review.id }}"><button>Delete</button></a></td>
+                    <td><a href="/review/update/{{ review.id }}">
+                        <button class="btn btn-dark">Edit</button></a>
+                        <a href="/review/delete/confirm/{{ review.id }}">
+                            <button class="btn btn-dark">Delete</button></a></td>
                 {% endif %}
             </tr>
             {% endfor %}

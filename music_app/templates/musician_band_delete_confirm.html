@@ -3,8 +3,8 @@
 {% block body %}
 
     <h1>All Time Music!</h1>
-    <p>Are you sure to delete musician {{ musician }} from band {{ band }}?</p><br>
-    <a href="/bands/alphabetical/">No</a><br>
-    <a href="/delete/musician-from-band/{{ musician.id }}/">Yes</a><br>
+    <p>Are you sure to delete musician {{ musician }} from band {{ musician.band }}?</p><br>
+    <a href="/band/details/{{ musician.band.id }}"><button class="btn btn-dark">No</button></a>
+    <a href="/delete/musician-from-band/{{ musician.id }}/"><button class="btn btn-dark">Yes</button></a>
 
 {% endblock %}

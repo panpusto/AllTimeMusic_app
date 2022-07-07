@@ -7,14 +7,14 @@
     <h3>Enter genre name</h3>
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Add"><br>
+    <input type="submit" class="btn btn-dark" value="Add"><br>
 </form>
-<ul>
-    {% for genre in genres %}
-        <li>{{ genre.name }}</li>
-    {%  endfor %}
-</ul>
-<a href="/bands/genres/"><button>Back</button></a>
-<a href="/add-board/"><button>Return to Adding Board</button></a>
+{#<ul>#}
+{#    {% for genre in genres %}#}
+{#        <li>{{ genre.name }}</li>#}
+{#    {%  endfor %}#}
+{#</ul>#}
+<a href="/bands/genres/"><button class="btn btn-dark">Back</button></a>
+{#<a href="/add-board/"><button>Return to Adding Board</button></a>#}
 
 {% endblock %}

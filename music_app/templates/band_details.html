@@ -21,28 +21,33 @@
                     {{ genre.name }}<br>
                     {% endfor %}</td>
             <li>Lyrical themes: {{ band.lyrical_themes }}</li>
-            <li>Current label: {{ band.current_label }}</li>
+            <li>Current label: <a class="link-dark" href="/label/details/{{ band.current_label_id }}">
+                {{ band.current_label }}</a></li>
             <li>Bio: {{ band.bio }}</li>
             <li>Members:</li>
             {% for musician in musicians %}
-                <a href="/musician/details/{{ musician.id }}">{{ musician }} - {{ musician.role }}</a>
-                <a href="/delete/musician-from-band/confirm/{{ musician.id }}"><button>Delete from band</button></a>
+                <a class="link-dark" href="/musician/details/{{ musician.id }}">
+                    {{ musician }} - {{ musician.role }}</a>
+                <a href="/delete/musician-from-band/confirm/{{ musician.id }}">
+                    <button class="btn btn-light">Delete from band</button></a>
             {% endfor %}
             <li>Discography:</li>
             {% for album in albums %}
-                <a href="/album/details/{{ album.id }}">{{ album.title }}({{ album.release_date }})</a>
-                <a href="/review/create/{{ album.id }}/{{ band.id }}/"><button>Add review</button></a><br>
+                <a class="link-dark" href="/album/details/{{ album.id }}">
+                    {{ album.title }}({{ album.release_date }})</a>
+                <a href="/review/create/{{ album.id }}/{{ band.id }}/"><button class="btn btn-light">
+                    Add review</button></a><br>
             {% endfor %}
         </ul>
     </div>
         <form action="/band/update/{{ band.id }}/">
-            <p><input type="submit" value="Update band details"></p>
+            <p><input type="submit" class="btn btn-dark" value="Update band details"></p>
         </form>
         <form action="/band/delete/confirm/{{ band.id }}/">
-            <p><input type="submit" value="Delete band from db"></p>
+            <p><input type="submit" class="btn btn-dark" value="Delete band from database"></p>
         </form>
-        <form action="/">
-            <p><input type="submit" value="Return to Main Page"></p>
-        </form>
+{#        <form action="/">#}
+{#            <p><input type="submit" class="btn btn-dark" value="Return to Main Page"></p>#}
+{#        </form>#}
 
 {% endblock %}

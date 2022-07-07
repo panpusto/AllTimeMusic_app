@@ -4,7 +4,7 @@
 
     <h1>All Time Music!</h1>
     <p>Are you sure to delete label {{ label.name }}?</p><br>
-    <a href="/label/details/{{ label.id }}/">No</a><br>
-    <a href="/label/delete/{{ label.id }}/">Yes</a><br>
+    <a href="/label/details/{{ label.id }}/"><button class="btn btn-dark">No</button></a>
+    <a href="/label/delete/{{ label.id }}/"><button class="btn btn-dark">Yes</button></a>
 
 {% endblock %}

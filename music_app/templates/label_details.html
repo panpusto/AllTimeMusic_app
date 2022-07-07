@@ -13,13 +13,13 @@
             <li>Founding year: {{ label.founding_year }}</li>
         </ul>
         <form action="/label/update/{{ label.id }}/">
-            <p><input type="submit" value="Update label info"></p>
+            <p><input type="submit" class="btn btn-dark" value="Update label info"></p>
         </form>
         <form action="/label/delete/confirm/{{ label.id }}">
-            <p><input type="submit" value="Delete label"></p>
+            <p><input type="submit" class="btn btn-dark" value="Delete label"></p>
         </form>
-        <form action="/">
-            <p><input type="submit" value="Return to Main Page"></p>
-        </form>
+{#        <form action="/">#}
+{#            <p><input type="submit" class="btn btn-dark" value="Return to Main Page"></p>#}
+{#        </form>#}
 
 {% endblock %}
