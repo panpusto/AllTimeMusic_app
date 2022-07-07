@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
 <form method="post">
     <h3>Enter band details</h3>
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" class="btn btn-dark" value="Add">
+    <p><input type="submit" class="btn btn-dark" value="Add"></p><br>
+    <div class="break-after-form-button">
+    </div>
 </form>
 {#<a href="/add-board/"><button class="btn btn-dark">Return to Adding Board</button></a>#}
-
 {% endblock %}

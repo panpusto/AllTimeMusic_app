@@ -24,6 +24,7 @@
             <li>Current label: <a class="link-dark" href="/label/details/{{ band.current_label_id }}">
                 {{ band.current_label }}</a></li>
             <li>Bio: {{ band.bio }}</li>
+            {% if musicians %}
             <li>Members:</li>
             {% for musician in musicians %}
                 <a class="link-dark" href="/musician/details/{{ musician.id }}">
@@ -31,6 +32,8 @@
                 <a href="/delete/musician-from-band/confirm/{{ musician.id }}">
                     <button class="btn btn-light">Delete from band</button></a>
             {% endfor %}
+            {% endif %}
+            {% if albums %}
             <li>Discography:</li>
             {% for album in albums %}
                 <a class="link-dark" href="/album/details/{{ album.id }}">
@@ -38,6 +41,7 @@
                 <a href="/review/create/{{ album.id }}/{{ band.id }}/"><button class="btn btn-light">
                     Add review</button></a><br>
             {% endfor %}
+            {% endif %}
         </ul>
     </div>
         <form action="/band/update/{{ band.id }}/">
@@ -49,5 +53,6 @@
 {#        <form action="/">#}
 {#            <p><input type="submit" class="btn btn-dark" value="Return to Main Page"></p>#}
 {#        </form>#}
-
+    <div class="break-after-form-button">
+    </div>
 {% endblock %}

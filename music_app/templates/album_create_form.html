@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<form method="post">
-    {{ message }}
-    <h3>Enter album details</h3>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" class="btn btn-dark" value="Add"><br>
-</form>
+    <form method="post">
+        {{ message }}
+        <h3>Enter album details</h3>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-dark" value="Add"><br>
+    </form>
+    <div class="break-after-form-button">
+    </div>
 {#<a href="/add-board/"><button class="btn btn-dark">Return to Adding Board</button></a>#}
 
 {% endblock %}

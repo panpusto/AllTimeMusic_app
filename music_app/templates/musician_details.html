@@ -4,6 +4,7 @@
 
     <h2>Musician details</h2>
     Added {{ musician.added }} by {{ musician.added_by }}
+    <div class="details">
         <ul>
             <li>Name: {{ musician.name }}</li>
             <li>Full name: {{ musician.full_name }}</li>
@@ -18,6 +19,7 @@
         <form action="/musician/delete/confirm/{{ musician.id }}">
             <p><input type="submit" class="btn btn-dark" value="Delete musician from database"></p>
         </form>
+    </div>
 {#        <form action="/">#}
 {#            <p><input type="submit" class="btn btn-dark" value="Return to Main Page"></p>#}
 {#        </form>#}
