@@ -1,5 +1,3 @@
-from random import shuffle
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -12,26 +10,16 @@ from music_app.models import Band, Genre, Musician, Label, Album, MusicianBand, 
 
 class LandingPageView(View):
     def get(self, request):
-        random_reviews = list(Review.objects.all())[:3]
-        shuffle(random_reviews)
-        try:
-            random_first = random_reviews.pop(0)
-            random_two_last = random_reviews
-        except IndexError:
-            random_first = random_two_last = random_reviews
-
+        """This function display application main page."""
         return render(
             request,
             'main_page.html',
-            context={
-                'random_first': random_first,
-                'random_two_last': random_two_last
-            }
         )
 
 
 class UserCreateView(View):
     def get(self, request):
+        """This function display form to create new user account."""
         form = forms.UserCreateForm()
 
         return render(
@@ -43,6 +31,10 @@ class UserCreateView(View):
         )
 
     def post(self, request):
+        """
+        This function save data from create user
+        form to database.
+        """
         form = forms.UserCreateForm(request.POST)
 
         if form.is_valid():
@@ -70,6 +62,7 @@ class UserCreateView(View):
 
 class LoginView(View):
     def get(self, request):
+        """This function display form to log in a user."""
         form = forms.LoginForm()
         return render(
             request,
@@ -80,6 +73,10 @@ class LoginView(View):
         )
 
     def post(self, request):
+        """
+        This function log in authenticated user if username and password
+        are correct.
+        """
         form = forms.LoginForm(request.POST)
 
         if form.is_valid():
@@ -115,6 +112,7 @@ class LoginView(View):
 
 class LogoutView(View):
     def get(self, request):
+        """This function log out a user"""
         if request.user.is_authenticated:
             logout(request)
 
@@ -125,6 +123,10 @@ class PasswordResetView(LoginRequiredMixin, View):
     permission_required = 'auth.change_user'
 
     def get(self, request, user_id):
+        """
+        This user display reset password form for logged user.
+        Only for logged users.
+        """
         form = forms.PasswordResetForm()
 
         return render(
@@ -136,6 +138,7 @@ class PasswordResetView(LoginRequiredMixin, View):
         )
 
     def post(self, request, user_id):
+        """This function save user's new password to database."""
         user = get_object_or_404(User, id=user_id)
         form = forms.PasswordResetForm(request.POST)
 
@@ -157,11 +160,11 @@ class PasswordResetView(LoginRequiredMixin, View):
             )
 
 
-class UpdateUserView(View):
-    pass  # TODO to consider
-
-
 class BandsListAlphabeticalView(View):
+    """
+    This function display list of all bands in database in
+    alphabetical order.
+    """
     def get(self, request):
         bands = Band.objects.all().order_by('name')
         paginator = Paginator(bands, 10)
@@ -179,6 +182,7 @@ class BandsListAlphabeticalView(View):
 
 
 class BandsGenresListView(View):
+    """This function display list of all genres in database as links."""
     def get(self, request):
         genres = Genre.objects.all().order_by('name')
         paginator = Paginator(genres, 10)
@@ -196,6 +200,7 @@ class BandsGenresListView(View):
 
 
 class BandsListByGenreView(View):
+    """This function display list of bands by genres."""
     def get(self, request, _id):
         bands = Band.objects.filter(genre=_id).order_by('name')
         paginator = Paginator(bands, 10)
@@ -216,6 +221,10 @@ class BandCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display form to create a new band.
+        Only for logged users.
+        """
         form = forms.BandCreateForm()
 
         return render(
@@ -227,6 +236,7 @@ class BandCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """This function save a new band data in database."""
         form = forms.BandCreateForm(request.POST)
 
         if form.is_valid():
@@ -266,6 +276,7 @@ class BandCreateView(LoginRequiredMixin, View):
 
 
 class BandDetailsView(View):
+    """This function display all data about specific band."""
     def get(self, request, _id):
         band = Band.objects.get(pk=_id)
         musicians = MusicianBand.objects.filter(band_id=_id)
@@ -288,6 +299,10 @@ class BandUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display a form to update data of specific band.
+        Only for logged users.
+        """
         band = get_object_or_404(Band, id=_id)
         genre_ids = list(band.genre.values_list('id', flat=True))
         form = forms.BandCreateForm(initial={'name': band.name,
@@ -310,6 +325,7 @@ class BandUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """This function save updated data about band to database."""
         band = Band.objects.get(id=_id)
         form = forms.BandCreateForm(request.POST)
 
@@ -355,6 +371,10 @@ class BandDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete band data from database.
+        Only for logged users.
+        """
         Band.objects.get(pk=_id).delete()
 
         return redirect('/')
@@ -364,6 +384,11 @@ class BandDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question before delete
+        band data from database.
+        Only for logged users.
+        """
         band = Band.objects.get(pk=_id)
         return render(
             request,
@@ -376,6 +401,7 @@ class BandDeleteConfirmView(LoginRequiredMixin, View):
 
 class MusicianDetailsView(View):
     def get(self, request, _id):
+        """This function display all data about specific musician."""
         musician = Musician.objects.get(musicianband=_id)
         # bands = MusicianBand.objects.filter(musician_id=_id)
 
@@ -393,6 +419,10 @@ class MusicianCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display form to create a new musician.
+        Only for logged users.
+        """
         form = forms.MusicianCreateForm()
 
         return render(
@@ -404,6 +434,7 @@ class MusicianCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """This function save a new musician data to database"""
         form = forms.MusicianCreateForm(request.POST)
 
         if form.is_valid():
@@ -452,6 +483,10 @@ class MusicianUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display form to update musician data.
+        Only for logged users.
+        """
         musician = get_object_or_404(Musician, id=_id)
         form = forms.MusicianCreateForm(initial={'name': musician.name,
                                                  'full_name': musician.full_name,
@@ -470,6 +505,7 @@ class MusicianUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """This function save updated musician data to database."""
         musician = Musician.objects.get(pk=_id)
         form = forms.MusicianCreateForm(request.POST)
 
@@ -491,7 +527,7 @@ class MusicianUpdateView(LoginRequiredMixin, View):
             musician.bio = bio
             musician.save()
 
-            return redirect('/')    # TODO consider redirect URL
+            return redirect('/')
 
         else:
             return render(
@@ -507,6 +543,10 @@ class MusicianDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete musician data from database.
+        Only for logged users.
+        """
         Musician.objects.get(id=_id).delete()
 
         return redirect('/')
@@ -516,6 +556,11 @@ class MusicianDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question before
+        delete band data from database.
+        Only for logged users.
+        """
         musician = Musician.objects.get(id=_id)
         return render(
             request,
@@ -530,6 +575,10 @@ class LabelCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display form to create new label data.
+        Only for logged users.
+        """
         form = forms.LabelCreateForm()
 
         return render(
@@ -541,6 +590,7 @@ class LabelCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """This function save new label data to database."""
         form = forms.LabelCreateForm(request.POST)
 
         if form.is_valid():
@@ -588,6 +638,7 @@ class LabelCreateView(LoginRequiredMixin, View):
 
 class LabelDetailsView(View):
     def get(self, request, _id):
+        """This function display all details about specific label."""
         label = Label.objects.get(pk=_id)
 
         return render(
@@ -603,6 +654,10 @@ class LabelUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display form to update data about specific label.
+        Only for logged users.
+        """
         label = get_object_or_404(Label, pk=_id)
         form = forms.LabelCreateForm(initial={'name': label.name,
                                               'address': label.address,
@@ -621,6 +676,7 @@ class LabelUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """This function save updated label data to database."""
         label = Label.objects.get(pk=_id)
         form = forms.LabelCreateForm(request.POST)
 
@@ -656,6 +712,10 @@ class LabelUpdateView(LoginRequiredMixin, View):
 
 class LabelListView(View):
     def get(self, request):
+        """
+        This function display list of all labels in database
+        in alphabetical order.
+        """
         labels = Label.objects.all().order_by('name')
         paginator = Paginator(labels, 10)
 
@@ -675,6 +735,10 @@ class LabelDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete specific label from database.
+        Only for logged users.
+        """
         Label.objects.get(id=_id).delete()
 
         return redirect('/')
@@ -684,6 +748,11 @@ class LabelDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question
+        before delete specific label from database.
+        Only for logged users.
+        """
         label = Label.objects.get(id=_id)
         return render(
             request,
@@ -696,6 +765,10 @@ class LabelDeleteConfirmView(LoginRequiredMixin, View):
 
 class AlbumLastAddedView(View):
     def get(self, request):
+        """
+        This function display list of all albums
+        ordered by date of adding descending.
+        """
         albums = Album.objects.all().order_by('-added')
         paginator = Paginator(albums, 10)
 
@@ -713,6 +786,7 @@ class AlbumLastAddedView(View):
 
 class AlbumDetailsView(View):
     def get(self, request, album_id):
+        """This function display all data about specific album."""
         album = Album.objects.get(pk=album_id)
         return render(
             request,
@@ -727,6 +801,10 @@ class AlbumCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display a form to create a new album.
+        Only for logged users.
+        """
         form = forms.AlbumCreateForm()
 
         return render(
@@ -738,6 +816,7 @@ class AlbumCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """This function save new album data in database."""
         form = forms.AlbumCreateForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -794,6 +873,10 @@ class AlbumUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display form to update album data.
+        Only for logged users.
+        """
         album = get_object_or_404(Album, pk=_id)
         genre_ids = list(album.genre.values_list('id', flat=True))
         form = forms.AlbumCreateForm(initial={'title': album.title,
@@ -815,6 +898,7 @@ class AlbumUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """This function save updated album data to database."""
         album = Album.objects.get(pk=_id)
         form = forms.AlbumCreateForm(request.POST)
 
@@ -860,6 +944,10 @@ class AlbumDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete album from database.
+        Only for logged users.
+        """
         Album.objects.get(id=_id).delete()
 
         return redirect('/')
@@ -869,6 +957,11 @@ class AlbumDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display a confirmation question
+        before delete specific album from database.
+        Only for logged users.
+        """
         album = Album.objects.get(id=_id)
         return render(
             request,
@@ -883,6 +976,10 @@ class GenreCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display form to create new genre.
+        Only for logged users.
+        """
         genres = Genre.objects.all().order_by('name')
         form = forms.GenreCreateForm()
 
@@ -896,6 +993,7 @@ class GenreCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """This function save new genre data to database."""
         form = forms.GenreCreateForm(request.POST)
         genres = Genre.objects.all().order_by('name')
 
@@ -933,6 +1031,10 @@ class GenreUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display form to update genre data.
+        Only for logged users.
+        """
         genre = get_object_or_404(Genre, pk=_id)
         form = forms.GenreCreateForm(initial={'name': genre.name})
 
@@ -945,6 +1047,7 @@ class GenreUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """This function save updated genre data to database"""
         genre = Genre.objects.get(pk=_id)
         form = forms.GenreCreateForm(request.POST)
 
@@ -972,6 +1075,10 @@ class GenreDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete specific genre from database.
+        Only for logged users.
+        """
         Genre.objects.get(id=_id).delete()
 
         return redirect('/bands/genres/')
@@ -981,6 +1088,11 @@ class GenreDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question
+        before delete specific genre from database.
+        Only for logged users.
+        """
         genre = Genre.objects.get(id=_id)
         return render(
             request,
@@ -995,6 +1107,10 @@ class ReviewCreateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, album_id, band_id):
+        """
+        This function display a form to create album review.
+        Only for logged users.
+        """
         album = Album.objects.get(pk=album_id)
         band = Band.objects.get(pk=band_id)
         form = forms.ReviewCreateForm()
@@ -1010,6 +1126,7 @@ class ReviewCreateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, album_id, band_id):
+        """This form save album review data to database."""
         album = Album.objects.get(pk=album_id)
         band = Band.objects.get(pk=band_id)
         form = forms.ReviewCreateForm(request.POST)
@@ -1018,7 +1135,7 @@ class ReviewCreateView(LoginRequiredMixin, View):
 
             subject = data.get('subject')
             title = album.id
-            band_name = band.id  # TODO how to get id from this object
+            band_name = band.id
             rating = data.get('rating')
             description = data.get('description')
 
@@ -1049,6 +1166,10 @@ class AddMusicianToBand(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
+        """
+        This function display a form to add musician to specific band.
+        Only for logged users.
+        """
         form = forms.AddMusicianToBandForm()
 
         return render(
@@ -1060,6 +1181,10 @@ class AddMusicianToBand(LoginRequiredMixin, View):
         )
 
     def post(self, request):
+        """
+        This function save adding musician to band data
+        to database.
+        """
         form = forms.AddMusicianToBandForm(request.POST)
 
         if form.is_valid():
@@ -1095,6 +1220,10 @@ class DeleteMusicianFromBandView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete musician data from band.
+        Only for logged users.
+        """
         MusicianBand.objects.get(id=_id).delete()
 
         return redirect('/')
@@ -1104,6 +1233,11 @@ class DeleteMusicianFromBandConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question
+        before delete musician from band.
+        Only for logged users.
+        """
         musician = MusicianBand.objects.get(id=_id)
         return render(
             request,
@@ -1116,6 +1250,10 @@ class DeleteMusicianFromBandConfirmView(LoginRequiredMixin, View):
 
 class ReviewsListView(View):
     def get(self, request):
+        """
+        This function display a list of all reviews
+        ordered by adding date descending.
+        """
         reviews = Review.objects.all().order_by('-added')
         paginator = Paginator(reviews, 10)
 
@@ -1132,6 +1270,7 @@ class ReviewsListView(View):
 
 class ReviewDetailsView(View):
     def get(self, request, _id):
+        """This function display all details about specific review."""
         review = Review.objects.get(pk=_id)
 
         return render(
@@ -1147,6 +1286,10 @@ class ReviewUpdateView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display form to update review data.
+        Only for logged users.
+        """
         review = get_object_or_404(Review, pk=_id)
         form = forms.ReviewCreateForm(initial={'subject': review.subject,
                                                'album': review.album,
@@ -1163,6 +1306,10 @@ class ReviewUpdateView(LoginRequiredMixin, View):
         )
 
     def post(self, request, _id):
+        """
+        This form save updated review data to database.
+        Only for logged users.
+        """
         review = Review.objects.get(pk=_id)
         form = forms.ReviewCreateForm(request.POST)
 
@@ -1196,6 +1343,10 @@ class ReviewDeleteView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function delete review data from database.
+        Only for logged users.
+        """
         Review.objects.get(id=_id).delete()
 
         return redirect('reviews-list')
@@ -1205,6 +1356,11 @@ class ReviewDeleteConfirmView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request, _id):
+        """
+        This function display confirmation question
+        before delete review data from database.
+        Only for logged users.
+        """
         review = Review.objects.get(id=_id)
         return render(
             request,
@@ -1219,7 +1375,7 @@ class AddMusicDataView(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-
+        """This function display board with adding options, only for logged users."""
         return render(
             request,
             'add_board.html',
@@ -1227,6 +1383,7 @@ class AddMusicDataView(LoginRequiredMixin, View):
 
 
 def search_band(request):
+    """This function searching a band by name."""
     band = Band.objects.all()
     searching_band = request.GET['query']
 

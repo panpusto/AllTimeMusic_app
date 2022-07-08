@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models.fields import BLANK_CHOICE_DASH
 from music_app.models import BAND_STATUS, Musician, Genre, Label, LABEL_STATUS, ALBUM_TYPES, FORMAT_TYPES, Band
+from .validators import validate_password
 
 
 class LoginForm(forms.Form):
@@ -12,8 +13,9 @@ class LoginForm(forms.Form):
 
 class UserCreateForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput, validators=[validate_password])
+    password2 = forms.CharField(widget=forms.PasswordInput,
+                                label='Repeat password')
     first_name = forms.CharField()
     last_name = forms.CharField()
     email = forms.EmailField()
