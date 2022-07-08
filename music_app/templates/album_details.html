@@ -23,11 +23,15 @@
         <form action="/album/update/{{ album.id }}/">
             <p><input type="submit" class="btn btn-dark" value="Update album info"></p>
         </form>
+        <form action="/review/create/{{ album.id }}/{{ album.band.id }}/">
+            <p><input type="submit" class="btn btn-dark" value="Add review"></p>
+        </form>
         <form action="/album/delete/confirm/{{ album.id }}">
             <p><input type="submit" class="btn btn-dark" value="Delete album"></p>
         </form>
 {#        <form action="/">#}
 {#            <p><input type="submit" class="btn btn-dark" value="Return to Main Page"></p>#}
 {#        </form>#}
-
+<div class="break-after-form-button">
+</div>
 {% endblock %}

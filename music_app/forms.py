@@ -77,7 +77,7 @@ class BandCreateForm(forms.Form):
 
 class MusicianCreateForm(forms.Form):
     name = forms.CharField()
-    full_name = forms.CharField()
+    full_name = forms.CharField(label='Full name/Real name:')
     born = forms.DateField(widget=forms.NumberInput(attrs={'type': 'date'}), required=False)
     died = forms.DateField(widget=forms.NumberInput(attrs={'type': 'date'}), required=False)
     place_of_birth = forms.CharField()

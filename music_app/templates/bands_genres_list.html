@@ -6,16 +6,20 @@
         <table class="table table-hover">
             <tr>
                 <th>Genre</th>
+                {% if user.is_authenticated %}
                 <th>Options</th>
+                {% endif %}
             </tr>
             <tr>
             {% for genre in page_obj %}
             <tr>
                 <td><a class="link-dark" href="/bands/genres/{{ genre.id }}">{{ genre.name }}</a></td>
+                {% if user.is_authenticated %}
                 <td><a href="/genre/update/{{ genre.id }}/">
                     <button type="button" class="btn btn-dark">Edit</button></a>
                     <a href="/genre/delete/confirm/{{ genre.id }}/">
                         <button type="button" class="btn btn-dark">Delete</button></a></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
@@ -42,6 +46,8 @@
                 </ul>
             </nav>
     {% endif %}
+    <div class="break-after-form-button">
+    </div>
 {#<a href="/"><button>Return to Main Page</button></a>#}
 
 {% endblock %}

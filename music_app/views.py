@@ -264,7 +264,7 @@ class BandCreateView(LoginRequiredMixin, View):
                                        added_by=request.user)
             band.genre.set(genre)
 
-            return redirect('add-board')
+            return redirect(f'/band/details/{band.id}/')
 
         return render(
             request,
@@ -857,7 +857,7 @@ class AlbumCreateView(LoginRequiredMixin, View):
 
             album.genre.set(genre)
 
-            return redirect('add-board')
+            return redirect(f'/album/details/{album.id}/')
 
         else:
             return render(
