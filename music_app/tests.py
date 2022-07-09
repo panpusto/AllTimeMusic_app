@@ -451,7 +451,7 @@ def test_add_musician_to_band_view(client, band, musician, musician_to_band, use
     # count_after_create = MusicianBand.objects.count()
     assert post_response.status_code == 200
     # assert count_after_create == count_before_create + 1
-    # #TODO fix, passed in 'run' not terminal
+    # TODO passed in 'run' not terminal
 
 
 @pytest.mark.django_db
