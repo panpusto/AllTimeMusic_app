@@ -1,3 +1,5 @@
+<p><solid>---API with Django Rest Framework in progress---</solid></p>
+
 <h3>General Info</h2>
 <p>All Time Music is the  web app which allows to create a music database.
 You can add here data about bands, albums, musicians, labels and add music album reviews.</p>
@@ -21,3 +23,4 @@ You can add here data about bands, albums, musicians, labels and add music album
     <li>register form validation</li>
     <li>all other forms validation</li>
 </ul>
+
