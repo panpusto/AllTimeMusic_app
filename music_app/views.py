@@ -1402,10 +1402,19 @@ def search_band(request):
                 }
             )
 
+        return render(
+            request,
+            'searching-results.html',
+            context={
+                'band': band,
+            }
+        ),
+
     return render(
         request,
         'searching-results.html',
         context={
-            'band': band,
+            'message': 'Type a band name before searching.'
         }
     )
+
