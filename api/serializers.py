@@ -9,3 +9,4 @@ class GenreSerializer(serializers.ModelSerializer):
             'id',
             'name',
         )
+        model = Genre
