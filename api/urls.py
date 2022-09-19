@@ -11,4 +11,5 @@ urlpatterns = [
     path("albums/", v.AlbumList.as_view(), name="api-albums-list"),
     path("reviews/", v.ReviewList.as_view(), name="api-reviews-list"),
     path("musician-to-band/", v.MusicianBandList.as_view(), name='api-musician-band-list'),
+    path("users/", v.UserList.as_view(), name='api-users-list'),
 ]

@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from django.contrib.auth import get_user_model
 
 from api.serializers import (
     GenreSerializer,
@@ -8,6 +9,7 @@ from api.serializers import (
     AlbumSerializer,
     ReviewSerializer,
     MusicianBandSerializer,
+    UserSerializer,
 )
 
 from music_app.models import (
@@ -61,3 +63,9 @@ class ReviewList(generics.ListCreateAPIView):
 class MusicianBandList(generics.ListCreateAPIView):
     queryset = MusicianBand.objects.all()
     serializer_class = MusicianBandSerializer
+
+
+class UserList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAdminUser]
+    queryset = get_user_model().objects.all().order_by('id')
+    serializer_class = UserSerializer
