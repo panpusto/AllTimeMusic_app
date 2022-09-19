@@ -1,17 +1,18 @@
 from rest_framework import serializers
 
-from music_app.models import \
-    Genre, \
-    Label, \
-    Musician, \
-    Band, \
-    Album, \
-    Review, \
-    MusicianBand, \
-    LABEL_STATUS, \
-    BAND_STATUS, \
-    ALBUM_TYPES, \
-    FORMAT_TYPES
+from music_app.models import (
+    Genre,
+    Label,
+    Musician,
+    Band,
+    Album,
+    Review,
+    MusicianBand,
+    LABEL_STATUS,
+    BAND_STATUS,
+    ALBUM_TYPES,
+    FORMAT_TYPES,
+)
 
 
 class ChoiceField(serializers.ChoiceField):
@@ -147,3 +148,5 @@ class MusicianBandSerializer(serializers.ModelSerializer):
             'nickname',
         )
         model = MusicianBand
+
+

@@ -1,0 +1,685 @@
+openapi: 3.0.3
+info:
+  title: All Time Music API
+  version: 1.0.0
+  description: A music database
+paths:
+  /api/v1/albums/:
+    get:
+      operationId: albums_list
+      tags:
+      - albums
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Album'
+          description: ''
+    post:
+      operationId: albums_create
+      tags:
+      - albums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Album'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Album'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Album'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Album'
+          description: ''
+  /api/v1/bands/:
+    get:
+      operationId: bands_list
+      tags:
+      - bands
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Band'
+          description: ''
+    post:
+      operationId: bands_create
+      tags:
+      - bands
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Band'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Band'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Band'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Band'
+          description: ''
+  /api/v1/genres/:
+    get:
+      operationId: genres_list
+      tags:
+      - genres
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+          description: ''
+    post:
+      operationId: genres_create
+      tags:
+      - genres
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Genre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+          description: ''
+  /api/v1/genres/{id}/:
+    get:
+      operationId: genres_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - genres
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+          description: ''
+    put:
+      operationId: genres_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - genres
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Genre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Genre'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+          description: ''
+    patch:
+      operationId: genres_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - genres
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGenre'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGenre'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGenre'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+          description: ''
+    delete:
+      operationId: genres_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - genres
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/labels/:
+    get:
+      operationId: labels_list
+      tags:
+      - labels
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+          description: ''
+    post:
+      operationId: labels_create
+      tags:
+      - labels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Label'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Label'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+          description: ''
+  /api/v1/musician-to-band/:
+    get:
+      operationId: musician_to_band_list
+      tags:
+      - musician-to-band
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MusicianBand'
+          description: ''
+    post:
+      operationId: musician_to_band_create
+      tags:
+      - musician-to-band
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MusicianBand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MusicianBand'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MusicianBand'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MusicianBand'
+          description: ''
+  /api/v1/musicians/:
+    get:
+      operationId: musicians_list
+      tags:
+      - musicians
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Musician'
+          description: ''
+    post:
+      operationId: musicians_create
+      tags:
+      - musicians
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Musician'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Musician'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Musician'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+          description: ''
+  /api/v1/reviews/:
+    get:
+      operationId: reviews_list
+      tags:
+      - reviews
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+          description: ''
+    post:
+      operationId: reviews_create
+      tags:
+      - reviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+components:
+  schemas:
+    Album:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        genre:
+          type: array
+          items:
+            type: string
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        release_date:
+          type: string
+          format: date
+          nullable: true
+        catalog_id:
+          type: string
+          maxLength: 16
+        format:
+          $ref: '#/components/schemas/FormatEnum'
+        band:
+          type: string
+        label:
+          type: string
+      required:
+      - band
+      - catalog_id
+      - format
+      - genre
+      - id
+      - label
+      - title
+      - type
+    Band:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        country_of_origin:
+          type: string
+          maxLength: 50
+        location:
+          type: string
+          maxLength: 50
+        status:
+          $ref: '#/components/schemas/BandStatusEnum'
+        formed_in:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        ended_in:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        genre:
+          type: array
+          items:
+            type: string
+        lyrical_themes:
+          type: string
+          maxLength: 60
+        bio:
+          type: string
+          nullable: true
+        current_label:
+          type: string
+      required:
+      - country_of_origin
+      - current_label
+      - formed_in
+      - genre
+      - id
+      - location
+      - lyrical_themes
+      - name
+      - status
+    BandStatusEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      type: integer
+    FormatEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      type: integer
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+      required:
+      - id
+      - name
+    Label:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 40
+        address:
+          type: string
+          maxLength: 128
+        country:
+          type: string
+          maxLength: 30
+        status:
+          $ref: '#/components/schemas/LabelStatusEnum'
+        styles:
+          type: string
+          maxLength: 128
+        founding_year:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+      required:
+      - address
+      - country
+      - founding_year
+      - id
+      - name
+      - status
+      - styles
+    LabelStatusEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      type: integer
+    Musician:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        full_name:
+          type: string
+          maxLength: 50
+        born:
+          type: string
+          format: date
+          nullable: true
+        died:
+          type: string
+          format: date
+          nullable: true
+        place_of_birth:
+          type: string
+          maxLength: 50
+        bio:
+          type: string
+          nullable: true
+      required:
+      - full_name
+      - id
+      - name
+      - place_of_birth
+    MusicianBand:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        year_from:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        year_to:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        role:
+          type: string
+          maxLength: 50
+        band:
+          type: string
+        real_name:
+          type: string
+        nickname:
+          type: string
+      required:
+      - band
+      - id
+      - nickname
+      - real_name
+      - role
+    PatchedGenre:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        subject:
+          type: string
+          maxLength: 30
+        rating:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,1})?$
+        description:
+          type: string
+        album:
+          type: string
+        band:
+          type: string
+        user:
+          type: string
+      required:
+      - album
+      - band
+      - description
+      - id
+      - rating
+      - subject
+      - user
+    TypeEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      type: integer
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

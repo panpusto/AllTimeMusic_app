@@ -1,22 +1,24 @@
 from rest_framework import generics, permissions
 
-from api.serializers import \
-    GenreSerializer, \
-    LabelSerializer, \
-    MusicianSerializer, \
-    BandSerializer, \
-    AlbumSerializer, \
-    ReviewSerializer,\
-    MusicianBandSerializer
+from api.serializers import (
+    GenreSerializer,
+    LabelSerializer,
+    MusicianSerializer,
+    BandSerializer,
+    AlbumSerializer,
+    ReviewSerializer,
+    MusicianBandSerializer,
+)
 
-from music_app.models import \
-    Genre, \
-    Label, \
-    Musician, \
-    Band, \
-    Album, \
-    Review,\
-    MusicianBand
+from music_app.models import (
+    Genre,
+    Label,
+    Musician,
+    Band,
+    Album,
+    Review,
+    MusicianBand,
+)
 
 
 class GenreList(generics.ListCreateAPIView):
