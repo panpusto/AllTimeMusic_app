@@ -72,6 +72,7 @@ class MusicianSerializer(serializers.ModelSerializer):
 class BandSerializer(serializers.ModelSerializer):
     status = ChoiceField(choices=BAND_STATUS)
     current_label = serializers.CharField(source='current_label.name')
+    genre = serializers.StringRelatedField(many=True)
 
     class Meta:
         fields = (
@@ -82,6 +83,7 @@ class BandSerializer(serializers.ModelSerializer):
             'status',
             'formed_in',
             'ended_in',
+            'genre',
             'lyrical_themes',
             'bio',
             'current_label',
@@ -94,11 +96,13 @@ class AlbumSerializer(serializers.ModelSerializer):
     format = ChoiceField(choices=FORMAT_TYPES)
     band = serializers.CharField(source='band.name')
     label = serializers.CharField(source='label.name')
+    genre = serializers.StringRelatedField(many=True)
 
     class Meta:
         fields = (
             'id',
             'title',
+            'genre',
             'type',
             'release_date',
             'catalog_id',
