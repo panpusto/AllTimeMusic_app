@@ -14,3 +14,4 @@ def validate_password(param):
         raise ValidationError("Password should have at least one lower case letter.")
     elif not any(char in special_symbols for char in param):
         raise ValidationError("Password should have at least on of these symbols: !, @, #, %.")
+

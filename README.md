@@ -8,6 +8,7 @@ You can add here data about bands, albums, musicians, labels and add music album
 <p>Project is created with:</p>
     <ul>
         <li><strong>Python (Django framework)</strong></li>
+        <li><strong>Django REST Framework</strong></li>
         <li><strong>CSS</strong></li>
         <li><strong>HTML</strong></li>
         <li><strong>bootstrap</strong></li>
@@ -22,5 +23,7 @@ You can add here data about bands, albums, musicians, labels and add music album
     <li>creating, updating and deleting content are available for logged users</li>
     <li>register form validation</li>
     <li>all other forms validation</li>
+    <li>API for all models available for logged users</li>
+    <li>APi for users model available only for admins</li>
 </ul>
 
