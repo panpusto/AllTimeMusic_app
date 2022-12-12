@@ -1,4 +1,6 @@
-**More optimized version in development** [Here]('https://github.com/panpusto/music_base_v2')
+**More optimized version in development** *[Here](https://github.com/panpusto/music_base_v2)*
+
+---
 
 ## General Info
 All Time Music is the  web app which allows to create a music database.
